@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require 'staccato-proxy'
+require 'staccato/proxy/cli'
+
+supervisor = Staccato::Proxy::CLI.new(ARGV).run
+
+trap("INT") {supervisor.terminate; exit 0}
+trap("TERM") {supervisor.terminate; exit 0}
+sleep
