@@ -16,6 +16,10 @@ module Staccato::Proxy
             "Usage: #{@name} --help\n"
           ].compact.join
 
+          parser.on('--debug') do
+            options[:debug] = true
+          end
+
           # parser.on('-c', '--config FILE') do |path|
           #   options[:config_path] = path
           # end

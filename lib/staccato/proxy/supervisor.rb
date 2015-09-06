@@ -19,9 +19,13 @@ module Staccato::Proxy
       options.fetch(:url, GA_COLLECTION_URL)
     end
 
+    def debug?
+      options.fetch(:debug, false)
+    end
+
     def run
-      @group.supervise_as(:staccato_proxy_listener, Staccato::Proxy::Listener, host, port)
-      @group.supervise_as(:staccato_proxy_sender, Staccato::Proxy::Sender, url)
+      @group.supervise_as(:staccato_proxy_listener, Staccato::Proxy::Listener, host, port, debug?)
+      @group.supervise_as(:staccato_proxy_sender, Staccato::Proxy::Sender, url, debug?)
       self
     end
 

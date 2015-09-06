@@ -4,8 +4,10 @@ module Staccato::Proxy
 
     FRAME_SIZE = 4096
 
-    def initialize(host, port)
+    def initialize(host, port, debug = false)
       @socket = UDPSocket.new.tap {|s| s.bind(host, port)}
+      @debug = debug
+
       async.run
     end
 
@@ -14,11 +16,12 @@ module Staccato::Proxy
     end
 
     def run
-      loop {receive!(@socket.recvfrom(FRAME_SIZE))}
+      loop {async.receive(@socket.recvfrom(FRAME_SIZE))}
     end
 
     def receive(data)
-      sender.async.submit(data)
+      debug data
+      sender.async.submit(data[0])
     end
 
     def sender
@@ -27,6 +30,10 @@ module Staccato::Proxy
 
     def log(msg)
       Celluloid.logger.info(msg)
+    end
+
+    def debug(msg)
+      log(msg) if @debug
     end
   end
 end
