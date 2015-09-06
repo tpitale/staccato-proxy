@@ -1,6 +1,6 @@
 # Staccato::Proxy
 
-TODO: Write a gem description
+A UDP to HTTP proxy exclusively for use with [Staccato](https://github.com/tpitale/staccato) to Google Analytics.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+`staccato-proxy --debug`
 
 ## Contributing
 
