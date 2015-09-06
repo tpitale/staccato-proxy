@@ -1,4 +1,5 @@
 require 'optparse'
+require 'celluloid/current'
 require 'http'
 require 'celluloid/io'
 
