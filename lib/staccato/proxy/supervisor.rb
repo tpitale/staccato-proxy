@@ -4,7 +4,6 @@ module Staccato::Proxy
 
     def initialize(options)
       @options = options
-      @group = Celluloid::SupervisionGroup.run!
     end
 
     def host
@@ -24,13 +23,24 @@ module Staccato::Proxy
     end
 
     def run
-      @group.supervise_as(:staccato_proxy_listener, Staccato::Proxy::Listener, host, port, debug?)
-      @group.supervise_as(:staccato_proxy_sender, Staccato::Proxy::Sender, url, debug?)
+      config.deploy
       self
     end
 
     def terminate
-      @group.terminate
+      config.shutdown
+    end
+
+    private
+    def config
+      @config ||= Celluloid::Supervision::Configuration.define([
+        {
+          type: Staccato::Proxy::Listener, as: :staccato_proxy_listener, args: [host, port, debug?]
+        },
+        {
+          type: Staccato::Proxy::Sender, as: :staccato_proxy_sender, args: [url, debug?]
+        }
+      ])
     end
   end
 end

@@ -1,5 +1,6 @@
 require 'optparse'
 require 'http'
+require 'celluloid/current'
 require 'celluloid/io'
 
 require "staccato/proxy/version"

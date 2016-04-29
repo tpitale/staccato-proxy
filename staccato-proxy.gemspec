@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "http"
   spec.add_dependency "celluloid-io"
+  spec.add_dependency "celluloid-supervision"
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake"
